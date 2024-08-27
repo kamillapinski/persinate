@@ -1,0 +1,9 @@
+<e:entity xmlns:e="https://lapinski.dev/persinate/entity" name="Cat">
+    <native>
+        <conversionBlock>
+            System.out.println("Converting a cat: " + liveEntity.getUuid());
+        </conversionBlock>
+    </native>
+    <property name="name" optional="false" type="string"/>
+    <property name="birthDate" optional="false" type="date"/>
+</e:entity>

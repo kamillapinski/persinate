@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:misc="https://lapinski.dev/persinate/misc"
+           xmlns="https://lapinski.dev/persinate/module" xmlns:x="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://lapinski.dev/persinate/module">
+    <x:import schemaLocation="misc.xsd" namespace="https://lapinski.dev/persinate/misc"/>
+    <xs:element name="module">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="config" type="ModuleConfig" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="entities" type="Entities" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="package" type="misc:QualifiedName" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="ModuleConfig">
+        <xs:all>
+            <xs:element name="hstEntitySuffix" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="hstTableSuffix" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="tableNameTranslation" type="TranslationStrategy" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="columnNameTranslation" type="TranslationStrategy" maxOccurs="1" minOccurs="0"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:simpleType name="TranslationStrategy">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="underscore"/>
+            <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Entities">
+        <xs:sequence>
+            <xs:element name="entity" type="EntityRef" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EntityRef">
+        <xs:attribute name="path" type="xs:string" use="required"/>
+    </xs:complexType>
+</xs:schema>

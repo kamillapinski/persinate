@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:misc="https://lapinski.dev/persinate/misc"
+           xmlns="https://lapinski.dev/persinate/entity"
+           targetNamespace="https://lapinski.dev/persinate/entity">
+    <xs:import schemaLocation="misc.xsd" namespace="https://lapinski.dev/persinate/misc"/>
+    <xs:element name="entity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element minOccurs="0" name="native" type="NativeProperties"/>
+                    <xs:element name="property" type="Property" minOccurs="0"/>
+                    <xs:element name="reference" type="Reference" minOccurs="0"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="tableName" type="xs:string" use="optional"/>
+            <xs:attribute name="hstTableName" type="xs:string" use="optional"/>
+            <xs:attribute name="generateHst" type="xs:boolean" use="optional" default="true"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="EntityField">
+        <xs:sequence maxOccurs="1" minOccurs="0">
+            <xs:element name="nativeHeader" type="NativeHeader"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="optional" type="xs:boolean" use="required"/>
+        <xs:attribute name="columnName" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="NativeHeader">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="replace" type="xs:boolean" use="optional" default="false"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="Property">
+        <xs:complexContent>
+            <xs:extension base="EntityField">
+                <xs:attribute name="type" type="misc:PropertyType" use="required"/>
+                <xs:attribute name="length" type="xs:int" use="optional" default="0"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Reference">
+        <xs:complexContent>
+            <xs:extension base="EntityField">
+                <xs:attribute name="target" type="misc:QualifiedName" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NativeProperties">
+        <xs:all>
+            <xs:element name="imports" type="Imports" minOccurs="0"/>
+            <xs:element name="implements" type="Implements" minOccurs="0"/>
+            <xs:element name="classHeader" type="NativeHeader" minOccurs="0"/>
+            <xs:element name="code" type="xs:string" minOccurs="0"/>
+            <xs:element name="conversionBlock" type="xs:string" minOccurs="0"/>
+        </xs:all>
+        <xs:attribute name="include" type="NativeInclusion" use="optional" default="always"/>
+    </xs:complexType>
+
+    <xs:simpleType name="NativeInclusion">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="live"/>
+            <xs:enumeration value="hst"/>
+            <xs:enumeration value="always"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Imports">
+        <xs:sequence>
+            <xs:element name="import" type="misc:QualifiedName" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Implements">
+        <xs:sequence>
+            <xs:element name="interface" type="misc:QualifiedName" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

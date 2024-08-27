@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns="https://lapinski.dev/persinate/misc"
+        targetNamespace="https://lapinski.dev/persinate/misc">
+    <xs:simpleType name="QualifiedName">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z_][a-zA-Z_0-9]*(\.[a-zA-Z_][a-zA-Z_0-9]*)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PropertyType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="string"/>
+            <xs:enumeration value="integer"/>
+            <xs:enumeration value="long"/>
+            <xs:enumeration value="date"/>
+            <xs:enumeration value="date-time"/>
+            <xs:enumeration value="char"/>
+            <xs:enumeration value="boolean"/>
+            <xs:enumeration value="bigint"/>
+            <xs:enumeration value="decimal"/>
+            <xs:enumeration value="blob"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

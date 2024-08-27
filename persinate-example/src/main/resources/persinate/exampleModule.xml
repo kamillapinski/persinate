@@ -1,0 +1,6 @@
+<m:module xmlns:m="https://lapinski.dev/persinate/module" name="Cats" package="dev.lapinski.persinate.example.cats">
+    <entities>
+        <entity path="catEntity.xml"/>
+        <entity path="mouseEntity.xml"/>
+    </entities>
+</m:module>

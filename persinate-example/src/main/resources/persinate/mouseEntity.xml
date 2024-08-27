@@ -1,0 +1,5 @@
+<e:entity xmlns:e="https://lapinski.dev/persinate/entity" name="Mouse">
+    <property name="hasFur" optional="false" type="boolean"/>
+    <reference name="chasedBy" optional="false" target="Cat"/>
+    <reference name="killedBy" optional="true" target="Cat"/>
+</e:entity>
